@@ -32,6 +32,16 @@ class initwindow(object):
         frame.rowconfigure(0, weight=1)
         return frame
     
+    def add_frame(self):
+        frame = ttk.Frame(self.parent, padding="3 3 12 12")
+        frame.grid(
+                column  = self.column,
+                row     = self.row,
+                sticky  = self.sticky)
+        frame.columnconfigure(0, weight=1)
+        frame.rowconfigure(0, weight=1)
+        return frame
+    
     def mainloop(self):
         self.root.mainloop()
 
@@ -65,7 +75,36 @@ class initwindow(object):
                         sticky  = self.sticky)
         return entry
 
-    
+    def add_progressbar100(self, varible):
+        bar = ttk.Progressbar( 
+                self.parent, 
+                orient=HORIZONTAL,
+                mode='determinate',
+                length=100,
+                #width = self.width, 
+                variable = varible
+                )
+        bar.grid(
+                column  = self.column,
+                row     = self.row,
+                sticky  = self.sticky)
+        return bar
+   
+
+    def add_text(self, varible):
+        text_label = ttk.Label( 
+                self.parent, 
+                #length=100,
+                width = self.width, 
+                text = varible
+                )
+        text_label.grid(
+                column  = self.column,
+                row     = self.row,
+                sticky  = self.sticky)
+        return text_label
+
+
     def addne_framelist(self, name):
         frame = LabelFrame( self.parent, text=name)
         frame.grid(
