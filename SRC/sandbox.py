@@ -1,7 +1,9 @@
-from presenter.xmler import *
-from model.globalsvar import *
+from tkinter import Tk
+from model.tkinterstruct import TKgeovalues
+from view.todolinecar import ToDolinebar
 
-parser = xmler()
-parser.loadXML(START_FILE)
-parser.testprintxml()
-print(parser.get_formatet_intag(HUB_TELEMETRY_TAG))
+parent = Tk()
+tkgeo = TKgeovalues(parent)
+todoline = ToDolinebar(tkgeo, "test")
+todoline.set_name("hi!")
+parent.mainloop()

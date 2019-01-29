@@ -18,7 +18,7 @@ class initwindow(object):
         """docstring for init_next_element_parametrs"""
         self.text   = "None" 
         self.width  = 7
-        self.height  = 7
+        self.height = 7
         self.row    = 2  
         self.column = 2  
         self.sticky = N
@@ -33,7 +33,7 @@ class initwindow(object):
         return frame
     
     def add_frame(self):
-        frame = ttk.Frame(self.parent, padding="3 3 12 12")
+        frame = ttk.Frame(self.parent, padding="1 1 1 1")
         frame.grid(
                 column  = self.column,
                 row     = self.row,
@@ -75,13 +75,12 @@ class initwindow(object):
                         sticky  = self.sticky)
         return entry
 
-    def add_progressbar100(self, varible):
+    def add_progressbar100(self, varible, orienting = HORIZONTAL):
         bar = ttk.Progressbar( 
                 self.parent, 
-                orient=HORIZONTAL,
+                orient = orienting,
                 mode='determinate',
-                length=100,
-                #width = self.width, 
+                length = self.width,
                 variable = varible
                 )
         bar.grid(
@@ -116,7 +115,7 @@ class initwindow(object):
         scrollbar.pack( side = RIGHT, fill = Y )
         mylist = Listbox(
                 frame, 
-                yscrollcommand = scrollbar.set , 
+                yscrollcommand = scrollbar.set_value , 
                 height = self.height, 
                 width = self.width
         )
@@ -129,3 +128,44 @@ class initwindow(object):
     def fill_list_by_arrey(self, list_element, arrey_sorce):
         for text_string in arrey_sorce:
             list_element.insert(END, text_string)
+
+    
+    def add_Line(self, name, value, h24, tuday, day3, week, month):
+        progress_line = self.add_frame() 
+        self.parent = progress_line
+        self.row = 1
+        self.width = 20
+        self.height = 0
+        self.column = 1
+        self.add_text(name)
+        self.column = 2
+        self.width = 5
+        self.addne_entry(value)
+        self.column = 3
+        self.width = 50
+        self.add_progressbar100(h24)
+        self.column = 4
+        self.add_progressbar100(tuday)
+        self.column = 5
+        self.add_progressbar100(day3)
+        self.column = 6
+        self.add_progressbar100(week)
+        self.column = 7
+        self.add_progressbar100(month)
+    
+    
+    def add_pi3(self, name, pi1, pi2, pi3):
+        pi3_block = self.add_frame() 
+        self.parent = pi3_block
+        self.width = 10
+        self.height = 0
+        self.column = 1
+        self.row = 1
+        self.add_text(name)
+        self.row = 2
+        self.width = 90
+        self.add_progressbar100(pi1)
+        self.row = 3
+        self.add_progressbar100(pi2)
+        self.row = 4
+        self.add_progressbar100(pi3)
