@@ -21,6 +21,15 @@ class GSTodo(object):
     
     def getProgressTo100Sum(self, address = TD_SUMPROGRESS100):
         return self.sheet_calc.acell(address).value
+
+    
+    def getNameList(self):
+        return self.sheet_main.range(TD_NAMERANGE) 
+    
+
+    
+    
+    
     
     
     

@@ -4,8 +4,6 @@ Created on 28 янв. 2019 г.
 @author: BuYn
 '''
 import unittest
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 from model.globalsvar import *
 from presenter.gstodo import GSTodo
 
@@ -26,11 +24,14 @@ class Test(unittest.TestCase):
 
 
     def setUp(self):
-        print("set up")
+        i ="stet up"
+        print("*"*33,i,"*"*33)
+
 
 
     def tearDown(self):
-        pass
+        i = "tear Down"
+        print("*"*33,i,"*"*33)
 
 
     def testGetTimeStump(self):
@@ -52,6 +53,22 @@ class Test(unittest.TestCase):
             self.gs.file.worksheet(TD_CALCSHEET).acell(TD_SUMPROGRESS100).value)
 
 
+    def testGetNameList(self):
+        sheet = self.gs.sheet_main
+        print(self.gs.getNameList()) 
+        self.assertEqual(
+            self.gs.getNameList()[0].value, 
+            self.gs.file.worksheet(TD_MAINSHEET).acell('G3').value)
+        
+        
+    def testGetListOfprogressForCell(self):
+        sheet = self.gs.sheet_main
+        print(self.gs.getListOfProgressForCell(self.gs.sheet_main.acell('G3'))) 
+        self.assertEqual(
+            self.gs.getNameList()[0].value, 
+            self.gs.file.worksheet(TD_MAINSHEET).acell('G3').value)
+        
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
