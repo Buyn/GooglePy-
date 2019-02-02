@@ -7,7 +7,4 @@ from view.todolinecar import ToDolinebar
 # todoline = ToDolinebar(tkgeo, "test")
 # todoline.set_name("hi!")
 # parent.mainloop()
-a = [1, 2, 3, 4]
-print(a[1])
-print(a[0])
 # print(a.)

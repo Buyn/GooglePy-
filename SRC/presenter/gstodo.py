@@ -25,6 +25,19 @@ class GSTodo(object):
     
     def getNameList(self):
         return self.sheet_main.range(TD_NAMERANGE) 
+
+    
+    def getListOfProgressForCell(self, cell):
+        result = []
+        result.append(self.sheet_main.cell(cell.row, cell.col - 1).value)
+        result.append(self.sheet_main.cell(cell.row, cell.col + 3).value)
+        result.append(self.sheet_main.cell(cell.row, cell.col + 4).value)
+        result.append(self.sheet_main.cell(cell.row, cell.col + 5).value)
+        result.append(self.sheet_main.cell(cell.row, cell.col + 6).value)
+        result.append(self.sheet_main.cell(cell.row, cell.col + 7).value)
+        return result
+    
+    
     
 
     
