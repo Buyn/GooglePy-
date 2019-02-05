@@ -12,19 +12,23 @@ class Test(unittest.TestCase):
 
     @classmethod
     def setUpClass(self):
+        print("*"*33,"*"*33)
         self.gs = GSTodo()
         # use creds to create a client to interact with the Google Drive API
         print ("file opened")
+        print("*"*33,"*"*33)
         self.gs.sheet_main.update_acell('A1', 'Bingo!')
 
         
     @classmethod
     def tearDownClass(cls):
-        print("tear down modeule")
+        print("*"*33,"*"*33)
+        print("tear down module")
+        print("*"*33,"*"*33)
 
 
     def setUp(self):
-        i ="stet up"
+        i ="set up"
         print("*"*33,i,"*"*33)
 
 
@@ -65,8 +69,16 @@ class Test(unittest.TestCase):
         sheet = self.gs.sheet_main
         print(self.gs.getListOfProgressForCell(self.gs.sheet_main.acell('G3'))) 
         self.assertEqual(
-            self.gs.getNameList()[0].value, 
-            self.gs.file.worksheet(TD_MAINSHEET).acell('G3').value)
+            self.gs.getListOfProgressForCell(self.gs.sheet_main.acell('G3'))[0], 
+            self.gs.file.worksheet(TD_MAINSHEET).acell('F3').value)
+        
+        
+    def testGetPiListOfprogressBarForCell(self):
+        sheet = self.gs.sheet_calc
+        print(self.gs.getListOfProgressForCell(sheet.acell('G3'))) 
+        self.assertEqual(
+            self.gs.getListOfProgressForCell(self.gs.sheet_main.acell('G3'))[0], 
+            self.gs.file.worksheet(TD_MAINSHEET).acell('F3').value)
         
         
 if __name__ == "__main__":
