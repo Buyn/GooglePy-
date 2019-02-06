@@ -75,10 +75,12 @@ class Test(unittest.TestCase):
         
     def testGetPiListOfprogressBarForCell(self):
         sheet = self.gs.sheet_calc
-        print(self.gs.getListOfProgressForCell(sheet.acell('G3'))) 
+        print(self.gs.getPiListOfProgressBarForCell(
+            sheet.acell(TD_PI24H))) 
         self.assertEqual(
-            self.gs.getListOfProgressForCell(self.gs.sheet_main.acell('G3'))[0], 
-            self.gs.file.worksheet(TD_MAINSHEET).acell('F3').value)
+            self.gs.getPiListOfProgressBarForCell(
+                sheet.acell(TD_PI24H))[0], 
+            sheet.acell(TD_PI24H).value)
         
         
 if __name__ == "__main__":
