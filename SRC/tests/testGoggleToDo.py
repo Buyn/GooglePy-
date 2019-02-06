@@ -80,7 +80,7 @@ class Test(unittest.TestCase):
         self.assertEqual(
             self.gs.getPiListOfProgressBarForCell(
                 sheet.acell(TD_PI24H))[0], 
-            sheet.acell(TD_PI24H).value)
+            int(sheet.acell(TD_PI24H).value.strip('%')))
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
