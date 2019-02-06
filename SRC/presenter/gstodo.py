@@ -38,15 +38,19 @@ class GSTodo(object):
         return result
 
     
-    def getPiListOfProgressBarForCell(self, cell):
+    def getPiListOfProgressBarForCell(self, cell_new):
         result = []
         for i in range(3):
             print(i)
-            value = self.sheet_main.cell(cell.row + i,
-                                         cell.col).value
+            cell = self.sheet_calc.cell(cell_new.row + i,
+                                         cell_new.col)
+            print(cell.col)
+            print(cell.row)
+            print(cell.value)
+            value =cell.value
             print(value)
 #             if (vdalue)
-        result.append(value)
+            result.append(value)
         return result
     
     

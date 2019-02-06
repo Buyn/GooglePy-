@@ -82,7 +82,6 @@ class Test(unittest.TestCase):
                 sheet.acell(TD_PI24H))[0], 
             sheet.acell(TD_PI24H).value)
         
-        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
