@@ -48,9 +48,7 @@ class GSTodo(object):
                         )
             if (value < 0):
                 value = 0
-            value = 100 - value
-            if (value < 0):
-                value = 0
+            value = value * 3
             result.append(value)
         return result
     

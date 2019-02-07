@@ -82,7 +82,7 @@ class Test(unittest.TestCase):
                 TD_PI24H)[0], 0)
         self.assertEqual(
             self.gs.getPiListOfProgressBarForCell(
-                TD_PI24H)[2], 62)
+                TD_PI24H)[2], 114)
         
         
 if __name__ == "__main__":
