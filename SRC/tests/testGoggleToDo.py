@@ -13,7 +13,8 @@ class Test(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         print("*"*33,"*"*33)
-        self.gs = GSTodo()
+        self.gs = GSTodo(filename = 'testToDoProgresDaylis')
+#        https://docs.google.com/spreadsheets/d/15EjV7CfotRunq831Ca1yWXtsI04DcVS_ukX0fHs6O7k/edit#gid=0
         # use creds to create a client to interact with the Google Drive API
         print ("file opened")
         print("*"*33,"*"*33)
@@ -30,7 +31,6 @@ class Test(unittest.TestCase):
     def setUp(self):
         i ="set up"
         print("*"*33,i,"*"*33)
-
 
 
     def tearDown(self):
@@ -79,8 +79,11 @@ class Test(unittest.TestCase):
             TD_PI24H)) 
         self.assertEqual(
             self.gs.getPiListOfProgressBarForCell(
-                TD_PI24H)[0], 
-            int(sheet.acell(TD_PI24H).value.strip('%')))
+                TD_PI24H)[0], 0)
+        self.assertEqual(
+            self.gs.getPiListOfProgressBarForCell(
+                TD_PI24H)[2], 62)
+        
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

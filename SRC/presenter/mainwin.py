@@ -68,7 +68,6 @@ class mainwindow(object):
         tkg.column = 3
         tkg.row = 1
         self.piTuday = Progres3pi(tkg, "Сегодня")
-        self.pi100.pi1
     
     
     def addTodoBars(self):
@@ -79,9 +78,9 @@ class mainwindow(object):
     
     
     def fillPi(self, pi, value):
-        pi.pi1 = value[0]
-        pi.pi2 = value[1]
-        pi.pi3 = value[2]
+        pi.pi1.set_value(value[0])
+        pi.pi2.set_value(value[1])
+        pi.pi3.set_value(value[2])
     
     
     def loadPisData(self):
