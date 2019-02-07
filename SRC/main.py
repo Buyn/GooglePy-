@@ -8,7 +8,14 @@ from presenter.mainwin import *
 
 
 def main():
-    mainwin.creatMainWin()
+    mainwin.openGoogleSheet(GS_FILE, GS_CRED_FILE)
+    mainwin.addButtonsFrame()
+    mainwin.addButtons()
+    mainwin.addPiFrame()
+    mainwin.addPis()
+    mainwin.loadPisData()
+    mainwin.addtodoListsFrame()
+    mainwin.addTodoBars()
     mainwin.mainloop()
     
 

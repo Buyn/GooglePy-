@@ -76,10 +76,10 @@ class Test(unittest.TestCase):
     def testGetPiListOfprogressBarForCell(self):
         sheet = self.gs.sheet_calc
         print(self.gs.getPiListOfProgressBarForCell(
-            sheet.acell(TD_PI24H))) 
+            TD_PI24H)) 
         self.assertEqual(
             self.gs.getPiListOfProgressBarForCell(
-                sheet.acell(TD_PI24H))[0], 
+                TD_PI24H)[0], 
             int(sheet.acell(TD_PI24H).value.strip('%')))
         
 if __name__ == "__main__":

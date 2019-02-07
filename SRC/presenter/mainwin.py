@@ -4,6 +4,8 @@ from model.globalsvar import *
 from model.tkinterstruct import TKgeovalues
 from view.progress3pi import Progres3pi
 from view.todolinecar import ToDolinebar
+from presenter.gstodo import GSTodo
+from fileinput import filename
 
 
 
@@ -31,7 +33,6 @@ class mainwindow(object):
         self.mainwin.width = 123
 
     
-    
     def addButtons(self):
         self.mainwin.text="Reload XML File"
         #    Open Button
@@ -56,9 +57,18 @@ class mainwindow(object):
     
     def addPis(self):
         tkg = TKgeovalues(self.piList)
-        tkg.column = 4
+        tkg.column = 1
         tkg.row = 1
-        self.pi01 = Progres3pi(tkg, "Test")
+        self.pi100 = Progres3pi(tkg, "К 100%")
+        tkg = TKgeovalues(self.piList)
+        tkg.column = 2
+        tkg.row = 1
+        self.pi24h = Progres3pi(tkg, "24 Часа")
+        tkg = TKgeovalues(self.piList)
+        tkg.column = 3
+        tkg.row = 1
+        self.piTuday = Progres3pi(tkg, "Сегодня")
+        self.pi100.pi1
     
     
     def addTodoBars(self):
@@ -68,16 +78,27 @@ class mainwindow(object):
         self.todo01 = ToDolinebar(tkg, 'Test')
     
     
-    def creatMainWin(self, ):
-        self.addButtonsFrame()
-        self.addButtons()
-        self.addtodoListsFrame()
-        self.addPiFrame()
-        self.addPis()
-        self.addTodoBars()
-        # end of init
-        self.todo01.value.set(42)
-        self.todo01.title_name.set("All work")
+    def fillPi(self, pi, value):
+        pi.pi1 = value[0]
+        pi.pi2 = value[1]
+        pi.pi3 = value[2]
+    
+    
+    def loadPisData(self):
+        self.fillPi(self.pi100, self.gsFile.getPiListOfProgressBarForCell(TD_PISUM))
+        self.fillPi(self.pi24h, self.gsFile.getPiListOfProgressBarForCell(TD_PI24H))
+        self.fillPi(self.piTuday, self.gsFile.getPiListOfProgressBarForCell(TD_PITUDAY))
+
+    
+    def openGoogleSheet(self, file_name, crade_name):
+        self.gsFile = GSTodo(filename = file_name, credfile = crade_name)
+    
+    
+    
+    
+
+    
+    
         
         
         

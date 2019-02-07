@@ -4,13 +4,13 @@ from model.globalsvar import *
 class GSTodo(object):
     
     
-    def __init__(self, credfile = GS_CRED_FILE):
+    def __init__(self, filename = GS_FILE, credfile = GS_CRED_FILE):
         # use creds to create a client to interact with the Google Drive API
         scope = ['https://spreadsheets.google.com/feeds',
                  'https://www.googleapis.com/auth/drive']
         creds = ServiceAccountCredentials.from_json_keyfile_name(credfile, scope)
         client = gspread.authorize(creds)
-        self.file = client.open(GS_FILE)
+        self.file = client.open(filename)
         self.sheet_main = self.file.worksheet(TD_MAINSHEET)
         self.sheet_calc = self.file.worksheet(TD_CALCSHEET)
 
@@ -38,12 +38,13 @@ class GSTodo(object):
         return result
 
     
-    def getPiListOfProgressBarForCell(self, cell_new):
+    def getPiListOfProgressBarForCell(self, cell_adress):
+        cell = self.sheet_calc.acell(cell_adress) 
         result = []
         for i in range(3):
             value = int(
-                        self.sheet_calc.cell( cell_new.row + i,
-                                            cell_new.col).value.strip('%')
+                        self.sheet_calc.cell( cell.row + i,
+                                            cell.col).value.strip('%')
                         )
             if (value < 0):
                 value = 0
