@@ -8,6 +8,8 @@ from tkinter import Tk
 from view.progressbar import *
 from model.tkinterstruct import TKgeovalues
 from view.progress3pi import Progres3pi
+from view.todolinecar import ToDolinebar
+from model.globalsvar import *
 
 
 class Test(unittest.TestCase):
@@ -54,7 +56,6 @@ class Test(unittest.TestCase):
 
 
     def testLineBarCreate(self):
-        from view.todolinecar import ToDolinebar
         self.todoline = ToDolinebar(self.tkgeo, "test")
         self.assertIsNotNone(self.todoline.title_name)
         self.assertIsNotNone(self.todoline.value)
@@ -69,6 +70,30 @@ class Test(unittest.TestCase):
         self.assertEqual(
             self.todoline.get_name(), 
             "new Test")
+        self.assertEqual(
+            self.tkgeo.parent, 
+            self.parent,
+            "Parent is lost")
+        self.todoline1 = ToDolinebar(self.tkgeo, "test1")
+        print(self.todoline1.get_name())
+        self.assertEqual(
+            self.todoline1.get_name(), 
+            "test1",
+            "text1 is lost")
+        print(self.todoline.get_name())
+        self.assertEqual(
+            self.todoline.get_name(), 
+            "new Test",
+            "text is lost")
+        todo = [1,2,3,4,5]
+        for j in WI_TODOPROGRESBAR.items():
+            print(j, j[0], j[1])
+            todo[j[1]] = ToDolinebar(self.tkgeo, j[0])
+        for j in WI_TODOPROGRESBAR.keys():
+            print(j, WI_TODOPROGRESBAR.get(j) )
+            print(todo[WI_TODOPROGRESBAR.get(j)])
+            self.assertIsNotNone(todo[WI_TODOPROGRESBAR.get(j)])
+            
         
         
 if __name__ == "__main__":

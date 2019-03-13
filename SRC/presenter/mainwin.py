@@ -39,12 +39,6 @@ class mainwindow(object):
         self.mainwin.addne_button( self.reloadfile)
     
     
-    def addPiFrame(self):
-        self.mainwin.row = 6
-        self.mainwin.sticky = S
-        self.piList = self.mainwin.add_frame()
-    
-    
     def addtodoListsFrame(self):
         # Name Frame with scroll bar list 
         self.mainwin.row = 5
@@ -54,6 +48,27 @@ class mainwindow(object):
         self.mainwin.height = 20
         self.valueList = self.mainwin.add_frame()    
 
+    
+    def addTodoBars(self):
+        tkg = TKgeovalues(self.valueList)
+        tkg.column = 1
+        self.todo = []
+        for j in range(WI_TODOPROGRESBARLINE -1):
+            tkg.row = j+1
+            self.todo.append( ToDolinebar(tkg, 'emmpty0' +str(j+1)))
+    
+    
+    def loadTodoList(self):
+        namelist = self.gsFile.getNameList()
+        for j in range(WI_TODOPROGRESBARLINE -1):
+            self.todo[j].set_name(namelist[j])
+    
+    
+    def addPiFrame(self):
+        self.mainwin.row = 6
+        self.mainwin.sticky = S
+        self.piList = self.mainwin.add_frame()
+    
     
     def addPis(self):
         tkg = TKgeovalues(self.piList)
@@ -70,13 +85,6 @@ class mainwindow(object):
         self.piTuday = Progres3pi(tkg, "Сегодня")
     
     
-    def addTodoBars(self):
-        tkg = TKgeovalues(self.valueList)
-        tkg.column = 1
-        tkg.row = 0
-        self.todo01 = ToDolinebar(tkg, 'Test')
-    
-    
     def fillPi(self, pi, value):
         pi.pi1.set_value(value[0])
         pi.pi2.set_value(value[1])
@@ -91,6 +99,10 @@ class mainwindow(object):
     
     def openGoogleSheet(self, file_name, crade_name):
         self.gsFile = GSTodo(filename = file_name, credfile = crade_name)
+
+    
+    
+    
     
     
     

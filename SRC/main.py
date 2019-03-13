@@ -16,6 +16,7 @@ def main():
     mainwin.loadPisData()
     mainwin.addtodoListsFrame()
     mainwin.addTodoBars()
+    mainwin.loadTodoList()
     mainwin.mainloop()
     
 

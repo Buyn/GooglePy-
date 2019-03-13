@@ -1,14 +1,15 @@
 from tkinter import ttk, StringVar, IntVar
 from view.progressbar import ProgressBar
+import copy
 class ToDolinebar(object):
-    
-    
-    def __init__(self, tkgeo, starttext):
+    def __init__(self, tmp_tkgeo, starttext):
+        tkgeo = copy.copy(tmp_tkgeo)
         self.frame  = ttk.Frame(tkgeo.parent, padding="1 1 1 1")
         self.frame.grid(
                 column  = tkgeo.column,
                 row     = tkgeo.row,
                 sticky  = tkgeo.sticky)
+        
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         tkgeo.parent = self.frame

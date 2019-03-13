@@ -3,9 +3,19 @@ APP_TITLE                    = "Dayli Todo Progres"
 
 
 # Datebase Setings
-GS_FILE                    = 'ToDoProgresDaylis'
+GS_FILE                    = 'testToDoProgresDaylis'
+#GS_FILE                    = 'ToDoProgresDaylis'
+#GS_CRED_FILE               = 'client_secret.json' 
 GS_CRED_FILE               = 'client_secret.json' 
-
+#StracturF1
+WI_TODOPROGRESBARLINE      =   9
+WI_TODOPROGRESBAR          =   {
+                                "Tuday" :0,
+                                "24h"   :1,
+                                "3days" :2,
+                                "Week"  :3,
+                                "Month" :4
+                                }
 #ToDo spreadsheet names
 TD_TIMESTUMP               = "E4"
 TD_SUMPROGRESS100          = "H13"
