@@ -1,12 +1,14 @@
 from tkinter import StringVar, IntVar
 from tkinter import ttk
 from model.tkinterstruct import TKgeovalues
+import copy
 
 
 class ProgressBar(object):
     
     
-    def __init__(self, tkvalues, startvalue):
+    def __init__(self, newtkvalues, startvalue):
+        tkvalues = copy.copy(newtkvalues)
         self.value = IntVar() 
         self.value.set(startvalue)
         self.bar = ttk.Progressbar( 

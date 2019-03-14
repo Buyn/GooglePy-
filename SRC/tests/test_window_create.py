@@ -59,11 +59,8 @@ class Test(unittest.TestCase):
         self.todoline = ToDolinebar(self.tkgeo, "test")
         self.assertIsNotNone(self.todoline.title_name)
         self.assertIsNotNone(self.todoline.value)
-        self.assertIsNotNone(self.todoline.h24)
-        self.assertIsNotNone(self.todoline.tuday)
-        self.assertIsNotNone(self.todoline.day3)
-        self.assertIsNotNone(self.todoline.week)
-        self.assertIsNotNone(self.todoline.month)
+        for i in range(len(WI_TODOPROGRESBAR)):
+            self.assertIsNotNone(self.todoline.lineprogress[i])
         self.assertEqual(self.todoline.get_value(), 0)
         self.assertEqual(self.todoline.get_name(), "test")
         self.todoline.set_name("new Test")

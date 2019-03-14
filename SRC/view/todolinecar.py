@@ -1,6 +1,7 @@
 from tkinter import ttk, StringVar, IntVar
 from view.progressbar import ProgressBar
 import copy
+from model.globalsvar import *
 class ToDolinebar(object):
     def __init__(self, tmp_tkgeo, starttext):
         tkgeo = copy.copy(tmp_tkgeo)
@@ -46,19 +47,10 @@ class ToDolinebar(object):
         tkgeo.row = 1
         tkgeo.column = 4
         tkgeo.length = 50
-        self.tuday = ProgressBar(tkgeo, 0)
-        tkgeo.row = 1
-        tkgeo.column = 5
-        self.h24 = ProgressBar(tkgeo, 0)
-        tkgeo.row = 1
-        tkgeo.column = 6
-        self.day3 = ProgressBar(tkgeo, 0)
-        tkgeo.row = 1
-        tkgeo.column = 7
-        self.week = ProgressBar(tkgeo, 0)
-        tkgeo.row = 1
-        tkgeo.column = 8
-        self.month = ProgressBar(tkgeo, 0)
+        self.lineprogress = [1,2,3,4,5,6]
+        for j in WI_TODOPROGRESBAR.items():
+            tkgeo.column = 5 +j[1]
+            self.lineprogress[j[1]] = ProgressBar(tkgeo, 0)
 
     
     def get_value(self):
@@ -71,6 +63,9 @@ class ToDolinebar(object):
     
     def set_name(self, newtext):
         return self.title_name.set(newtext)
-    
-    
 
+    
+    def setProgressLine(self, variblist):
+        for i in range(len(WI_TODOPROGRESBAR)):
+            self.lineprogress[i].set_value(variblist[i])
+    

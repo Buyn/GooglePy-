@@ -1,6 +1,7 @@
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from model.globalsvar import *
+import copy
 class GSTodo(object):
     
     
@@ -11,7 +12,7 @@ class GSTodo(object):
         creds = ServiceAccountCredentials.from_json_keyfile_name(credfile, scope)
         client = gspread.authorize(creds)
         self.file = client.open(filename)
-        self.sheet_main = self.file.worksheet(TD_MAINSHEET)
+        self.sheet_main = copy.deepcopy(self.file.worksheet(TD_MAINSHEET))
         self.sheet_calc = self.file.worksheet(TD_CALCSHEET)
 
     
@@ -51,6 +52,12 @@ class GSTodo(object):
             value = value * 3
             result.append(value)
         return result
+
+    
+    def getCellFromMain(self, name):
+        return self.sheet_main.acell(name)
+    
+    
     
     
     

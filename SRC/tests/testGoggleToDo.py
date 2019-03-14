@@ -60,6 +60,7 @@ class Test(unittest.TestCase):
     def testGetNameList(self):
         sheet = self.gs.sheet_main
         print(self.gs.getNameList()) 
+        print(self.gs.getNameList()[0].value)
         self.assertEqual(
             self.gs.getNameList()[0].value, 
             self.gs.file.worksheet(TD_MAINSHEET).acell('G3').value)
@@ -71,6 +72,15 @@ class Test(unittest.TestCase):
         self.assertEqual(
             self.gs.getListOfProgressForCell(self.gs.sheet_main.acell('G3'))[0], 
             self.gs.file.worksheet(TD_MAINSHEET).acell('F3').value)
+        
+        
+    def test_getCellFromMain(self):
+        name = 'G3'
+        i =1
+        name = "G" + str(3 +i)
+        print(name)
+        self.assertEqual(self.gs.getCellFromMain(name).value,
+                         self.gs.sheet_main.acell(name).value)
         
         
     def testGetPiListOfprogressBarForCell(self):
