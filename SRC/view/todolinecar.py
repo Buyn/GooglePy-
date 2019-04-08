@@ -10,7 +10,6 @@ class ToDolinebar(object):
                 column  = tkgeo.column,
                 row     = tkgeo.row,
                 sticky  = tkgeo.sticky)
-        
         self.frame.columnconfigure(0, weight=1)
         self.frame.rowconfigure(0, weight=1)
         tkgeo.parent = self.frame

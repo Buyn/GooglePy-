@@ -71,7 +71,7 @@ class mainwindow(object):
                      self.gsFile.getCellFromMain(name))) 
 #         vaibls = [10,20,30,40,50]
 #         self.todo[0].setProgressLine(vaibls) 
-#        self.todo[0].setProgressLine(getListOfProgressForCell(self.gsFile.sheet_main.acell('J3'))) 
+#         self.todo[0].setProgressLine(getListOfProgressForCell(self.gsFile.sheet_main.acell('J3'))) 
     
     def addPiFrame(self):
         self.mainwin.row = 6

@@ -13,7 +13,7 @@ class GSTodo(object):
         client = gspread.authorize(creds)
         self.file = client.open(filename)
         self.sheet_main = copy.deepcopy(self.file.worksheet(TD_MAINSHEET))
-        self.sheet_calc = self.file.worksheet(TD_CALCSHEET)
+        self.sheet_calc = copy.deepcopy(self.file.worksheet(TD_CALCSHEET))
 
     
     def getTimeStump(self, address = TD_TIMESTUMP):
@@ -55,6 +55,7 @@ class GSTodo(object):
 
     
     def getCellFromMain(self, name):
+#         print(self.sheet_main.acell(name))
         return self.sheet_main.acell(name)
     
     

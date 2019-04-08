@@ -32,7 +32,7 @@ class Test(unittest.TestCase):
 
         
     def test_Init(self):
-        self.assertEqual(self.line.lineprogress[0], 0)
+        self.assertNotEqual(self.line.lineprogress[0], 0)
         
         
 if __name__ == "__main__":
