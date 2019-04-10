@@ -1,34 +1,131 @@
+#import block {{{
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from model.globalsvar import *
 import copy
-class GSTodo(object):
+# }}}
+
+
+        
+
+
+class SheetGSpread(object):# {{{
+
+    def __init__(self, gfile, sheetname):# {{{
+        self.gfile = gfile
+        self.sheetname = sheetname
+        self.sheet = self.gfile.worksheet(
+            self.sheetname).get_all_values()
+        # }}}
+    
+    class GCell(object):
+        def __init__(self):
+            self.value = None
+            self.name = None
+            self.col = None
+            self.row = None
+            self.sheet = None
+        
+        def getCoord(self):
+            return [self.row, self.col]
+
+
+    def update_acell(self, cellname, value):# {{{
+        self.gfile.worksheet(
+            self.sheetname).update_acell(
+                cellname, value)
+        # }}}
+
+    def atoarrint(self, cellname):
+        if len(cellname) ==2:
+            return [self.atoint(cellname[0]),
+                       self.isInt(cellname[1])]
+        result =[0,0]
+        for i in range(len(cellname)): 
+            if self.isInt(cellname[i]) == -1:
+                result[0] += self.atoint(cellname[0])*(10**i)
+            else:
+                result[1] += self.isInt(cellname[i])*(10**(len(cellname) -1 - i))
+        return result
+            
+    
+    def isInt(self, var):# {{{
+        if isinstance(var, int):
+            return var
+        if isinstance(var, list) and len(var) == 1:
+            return var[0]
+        try:
+            return int(var)
+        except ValueError:
+            return -1
+        # }}}
+
+    def atoint(self, a):
+        return ord( a.lower() ) - 96
+
+    
+    def acell(self, cellname):
+        cell = self.GCell()
+        cell.sheet = self
+        cell.name = cellname
+        cell.col, cell.row = self.atoarrint(cellname)
+        print(cell.row, " , ", cell.col)
+        cell.value = self.sheet[cell.row -1][cell.col -1]
+        return cell 
+
+    
+    def cell(self, row, col):
+        cell = self.GCell()
+        cell.sheet = self
+        cell.col, cell.row = col, row
+        cell.value = self.sheet[cell.row -1][cell.col -1]
+        return cell 
+
+    
+
     
     
-    def __init__(self, filename = GS_FILE, credfile = GS_CRED_FILE):
-        # use creds to create a client to interact with the Google Drive API
+    def range(self, rangestring):
+        result =[]
+        split = rangestring.split( ":")
+        begin   = self.acell(split[0]).getCoord()
+        end     = self.acell(split[1]).getCoord()
+        for col in range(*( begin[0], end[0] +1 ) if begin[0]<end[0] else (end[0], begin[0]+1)):
+            for row in range(*( begin[1], end[1] +1 ) if begin[1]<end[1] else (end[1], begin[1]+1 )):
+                result.append(self.cell(col, row))
+        return result
+    
+    
+    
+    # }}}
+    
+
+class GSTodo(object):# {{{
+    
+    def __init__(self, filename = GS_FILE, credfile = GS_CRED_FILE):# {{{
+        # use creds to create begin client to interact with the Google Drive API
         scope = ['https://spreadsheets.google.com/feeds',
                  'https://www.googleapis.com/auth/drive']
         creds = ServiceAccountCredentials.from_json_keyfile_name(credfile, scope)
         client = gspread.authorize(creds)
         self.file = client.open(filename)
-        self.sheet_main = copy.deepcopy(self.file.worksheet(TD_MAINSHEET))
-        self.sheet_calc = copy.deepcopy(self.file.worksheet(TD_CALCSHEET))
-
+        self.sheet_main = SheetGSpread (self.file, TD_MAINSHEET)
+        self.sheet_calc = SheetGSpread(self.file, TD_CALCSHEET)
+# }}}
     
-    def getTimeStump(self, address = TD_TIMESTUMP):
+    def getTimeStump(self, address = TD_TIMESTUMP):# {{{
         return self.sheet_main.acell(address).value
-
+# }}}
     
-    def getProgressTo100Sum(self, address = TD_SUMPROGRESS100):
+    def getProgressTo100Sum(self, address = TD_SUMPROGRESS100):# {{{
         return self.sheet_calc.acell(address).value
-
+# }}}
     
-    def getNameList(self):
+    def getNameList(self):# {{{
         return self.sheet_main.range(TD_NAMERANGE) 
-
+# }}}
     
-    def getListOfProgressForCell(self, cell):
+    def getListOfProgressForCell(self, cell):# {{{
         result = []
         result.append(self.sheet_main.cell(cell.row, cell.col - 1).value)
         result.append(self.sheet_main.cell(cell.row, cell.col + 3).value)
@@ -37,9 +134,9 @@ class GSTodo(object):
         result.append(self.sheet_main.cell(cell.row, cell.col + 6).value)
         result.append(self.sheet_main.cell(cell.row, cell.col + 7).value)
         return result
-
+# }}}
     
-    def getPiListOfProgressBarForCell(self, cell_adress):
+    def getPiListOfProgressBarForCell(self, cell_adress):# {{{
         cell = self.sheet_calc.acell(cell_adress) 
         result = []
         for i in range(3):
@@ -52,13 +149,13 @@ class GSTodo(object):
             value = value * 3
             result.append(value)
         return result
-
+# }}}
     
-    def getCellFromMain(self, name):
-#         print(self.sheet_main.acell(name))
+    def getCellFromMain(self, name):# {{{
+        print(self.sheet_main.acell(name))
         return self.sheet_main.acell(name)
-    
-    
+    # }}}
+    # }}}
     
     
     
