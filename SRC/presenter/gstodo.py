@@ -2,7 +2,7 @@
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from model.globalsvar import *
-from sandbox import result
+from model.typsconvert import *
 # }}}
 
 class SheetGSpread(object):# {{{
@@ -14,17 +14,18 @@ class SheetGSpread(object):# {{{
             self.sheetname).get_all_values()
         # }}}
     
-    class GCell(object):
-        def __init__(self):
+    class GCell(object):# {{{
+        def __init__(self):# {{{
             self.value = None
             self.name = None
             self.col = None
             self.row = None
             self.sheet = None
-        
-        def getCoord(self):
+            # }}}
+        def getCoord(self):# {{{
             return [self.row, self.col]
-
+            # }}}
+    # }}}
 
     def update_acell(self, cellname, value):# {{{
         self.gfile.worksheet(
@@ -32,7 +33,7 @@ class SheetGSpread(object):# {{{
                 cellname, value)
         # }}}
 
-    def atoarrint(self, cellname):
+    def atoarrint(self, cellname):# {{{
         if len(cellname) ==2:
             return [self.atoint(cellname[0]),
                        self.isInt(cellname[1])]
@@ -43,7 +44,7 @@ class SheetGSpread(object):# {{{
             else:
                 result[1] += self.isInt(cellname[i])*(10**(len(cellname) -1 - i))
         return result
-            
+        # }}}
     
     def isInt(self, var):# {{{
         if isinstance(var, int):
@@ -56,11 +57,11 @@ class SheetGSpread(object):# {{{
             return -1
         # }}}
 
-    def atoint(self, a):
+    def atoint(self, a):# {{{
         return ord( a.lower() ) - 96
+        # }}}
 
-    
-    def acell(self, cellname):
+    def acell(self, cellname):# {{{
         cell = self.GCell()
         cell.sheet = self
         cell.name = cellname
@@ -68,17 +69,17 @@ class SheetGSpread(object):# {{{
 #         print(cell.row, " , ", cell.col)
         cell.value = self.sheet[cell.row -1][cell.col -1]
         return cell 
-
+        # }}}
     
-    def cell(self, row, col):
+    def cell(self, row, col):# {{{
         cell = self.GCell()
         cell.sheet = self
         cell.col, cell.row = col, row
         cell.value = self.sheet[cell.row -1][cell.col -1]
         return cell 
+        # }}}
 
-
-    def range(self, rangestring):
+    def range(self, rangestring):# {{{
         result =[]
         split = rangestring.split( ":")
         begin   = self.acell(split[0]).getCoord()
@@ -87,10 +88,16 @@ class SheetGSpread(object):# {{{
             for row in range(*( begin[1], end[1] +1 ) if begin[1]<end[1] else (end[1], begin[1]+1 )):
                 result.append(self.cell(col, row))
         return result
-     
+        # }}}
+
+    
+    def reload(self):# {{{
+        self.sheet = self.gfile.worksheet(
+            self.sheetname).get_all_values()
+        # }}}
+    
     # }}}
     
-
 class GSTodo(object):# {{{
     
     def __init__(self, filename = GS_FILE, credfile = GS_CRED_FILE):# {{{
@@ -148,14 +155,30 @@ class GSTodo(object):# {{{
         # }}}
 
     
-    def sendNewLogLine(self, newLine):
-        print(newLine)
+    def setBingo(self):
+        self.sheet_main.update_acell('A1', 'Bingo!')    
+    
+
+    def insertNewLogLine(self, newLine):
         self.file.worksheet(
             TD_LOG).insert_row(
                 self.compileNewLogString(
                     name = newLine[0], time = newLine[1])
                 ,index = TD_NEWLOGLINEINDEX 
                 ,value_input_option= "USER_ENTERED")
+    
+    
+    def reloadsheets(self):
+        self.sheet_main.reload()
+        self.sheet_calc.reload()
+    
+    
+    def sendNewLogLine(self, newLine):
+        print(newLine)
+        self.setBingo()
+        self.reloadsheets()
+        self.insertNewLogLine(newLine)
+        self.reloadsheets()
     
 
     def addEmptyString(self, result, counter):
@@ -164,7 +187,7 @@ class GSTodo(object):# {{{
     
     
     def getSumProgresto100(self, address = TD_SUMPROGRESS100 ):
-        return self.sheet_calc.acell(address).value
+        return p2f(self.sheet_calc.acell(address).value)
     
     
     def compileNewLogString(self, name, time):

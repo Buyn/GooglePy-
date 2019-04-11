@@ -50,7 +50,7 @@ class Test(unittest.TestCase):# {{{
         self.assertEqual(
                 result
             , ["2/6/2019 6:13:35","","",12,"Подготока ОС","","","","","",
-                "=NOW() - A21","=A21-Blans!$O$1","7.78%","","",
+                "=NOW() - A21","=A21-Blans!$O$1",0.07778,"","",
                 "=INT(A21)"])
         #   sheet.insertRowBefore(21); 
         #21, 1)("Main")"E4"

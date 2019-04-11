@@ -80,6 +80,8 @@ class ToDolinebar(object):
 
 
     def p2f(self, x):
+        if isinstance(x, int):
+            return x
         return float(x.strip('%'))
 
 

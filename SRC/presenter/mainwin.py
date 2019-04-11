@@ -62,6 +62,8 @@ class mainwindow(object):
 #         print("value is = ", value.get_value())
         self.gsFile.sendNewLogLine(
             [value.get_name(), value.get_value()])
+        self.loadPisData()
+        self.loadTodoList()
 
     
     def loadTodoList(self):
