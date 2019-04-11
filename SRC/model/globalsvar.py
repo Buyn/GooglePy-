@@ -24,6 +24,8 @@ TD_PITUDAY                 = "J4"
 TD_PI24H                   = "J9"
 #Ranges
 TD_NAMERANGE               = "G3:G11"
+TD_NEWLOGLINEINDEX         = 21
 #Seets
 TD_MAINSHEET               = "Main"
 TD_CALCSHEET               = "Calc"
+TD_LOG                     = "Log"

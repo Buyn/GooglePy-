@@ -2,6 +2,7 @@
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from model.globalsvar import *
+from sandbox import result
 # }}}
 
 class SheetGSpread(object):# {{{
@@ -149,7 +150,35 @@ class GSTodo(object):# {{{
     
     def sendNewLogLine(self, newLine):
         print(newLine)
+        self.file.worksheet(
+            TD_LOG).insert_row(
+                self.compileNewLogString(
+                    name = newLine[0], time = newLine[1])
+                ,index = TD_NEWLOGLINEINDEX 
+                ,value_input_option= "USER_ENTERED")
     
+
+    def addEmptyString(self, result, counter):
+        for i in range(counter):
+            result.append("")
+    
+    
+    def getSumProgresto100(self, address = TD_SUMPROGRESS100 ):
+        return self.sheet_calc.acell(address).value
+    
+    
+    def compileNewLogString(self, name, time):
+        result = [self.getTimeStump()]
+        self.addEmptyString(result, counter = 2)
+        result.append(time)
+        result.append(name)
+        self.addEmptyString(result, counter = 5)
+        result.append("=NOW() - A21")
+        result.append("=A21-Blans!$O$1")
+        result.append(self.getSumProgresto100())
+        self.addEmptyString(result, counter = 2)
+        result.append("=INT(A21)")
+        return result
     
     # }}}
     
