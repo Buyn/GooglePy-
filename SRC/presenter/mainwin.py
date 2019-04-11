@@ -12,15 +12,19 @@ from fileinput import filename
 class mainwindow(object):
     """Initilaze and Creat Main window For App"""
 
-    def reloadfile(self):
-        print("button:")
-
-
     def __init__(self, title):
 #         super(mainwindow, self).__init__()
         self.mainwin = initwindow(title)
 
+
+    def reloadAll(self):
+        print("button:")
+        self.gsFile.setBingo()
+        self.gsFile.reloadsheets()
+        self.loadPisData()
+        self.loadTodoList()
     
+
     def mainloop(self):
         self.mainwin.mainloop()
 
@@ -34,9 +38,9 @@ class mainwindow(object):
 
     
     def addButtons(self):
-        self.mainwin.text="Reload XML File"
+        self.mainwin.text="Reload"
         #    Open Button
-        self.mainwin.addne_button( self.reloadfile)
+        self.mainwin.addne_button( self.reloadAll)
     
     
     def addtodoListsFrame(self):
@@ -62,6 +66,7 @@ class mainwindow(object):
 #         print("value is = ", value.get_value())
         self.gsFile.sendNewLogLine(
             [value.get_name(), value.get_value()])
+        value.set_value(0)
         self.loadPisData()
         self.loadTodoList()
 

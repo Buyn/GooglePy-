@@ -70,7 +70,11 @@ class ToDolinebar(object):
     def get_value(self):
         return self.value.get()
 
+
+    def set_value(self, value):
+        self.value.set(value)
     
+
     def get_name(self):
         return self.title_name.get()
     
