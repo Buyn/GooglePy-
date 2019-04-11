@@ -2,9 +2,13 @@ from tkinter import ttk, StringVar, IntVar
 from view.progressbar import ProgressBar
 import copy
 from model.globalsvar import *
+
 class ToDolinebar(object):
-    def __init__(self, tmp_tkgeo, starttext):
+
+    
+    def __init__(self, tmp_tkgeo, starttext, validcommand = None):
         tkgeo = copy.copy(tmp_tkgeo)
+        self.validcommand =validcommand
         self.frame  = ttk.Frame(tkgeo.parent, padding="1 1 1 1")
         self.frame.grid(
                 column  = tkgeo.column,
@@ -16,6 +20,7 @@ class ToDolinebar(object):
         tkgeo.column = 1
         tkgeo.row = 1
         self.value = IntVar()
+#         self.value.trace('w', self.var)
         self.value.set(0)
         tkgeo.width = 20  
         self.title_name  = StringVar()
@@ -39,6 +44,7 @@ class ToDolinebar(object):
                 width = tkgeo.width, 
                 textvariable = self.value
                 )
+        entry.bind('<Key>', self.sendValue)
         entry.grid(
                 column  = tkgeo.column,
                 row     = tkgeo.row,
@@ -51,7 +57,16 @@ class ToDolinebar(object):
             tkgeo.column = 5 +j[1]
             self.lineprogress[j[1]] = ProgressBar(tkgeo, 0)
 
+
+    def sendValue(self, key):
+        if key.keycode != 13: return
+#         print(key)
+#         print([self.get_name(), self.get_value()])
+        if self.validcommand:
+            self.validcommand(self)
+           
     
+
     def get_value(self):
         return self.value.get()
 
@@ -63,8 +78,14 @@ class ToDolinebar(object):
     def set_name(self, newtext):
         return self.title_name.set(newtext)
 
-    
+
+    def p2f(self, x):
+        return float(x.strip('%'))
+
+
     def setProgressLine(self, variblist):
         for i in range(len(WI_TODOPROGRESBAR)):
-            self.lineprogress[i].set_value(variblist[i])
+#             print([i,variblist[i]])
+            self.lineprogress[i].set_value(self.p2f(variblist[i]))
+#             print([i,self.lineprogress[i].get_value()])
     

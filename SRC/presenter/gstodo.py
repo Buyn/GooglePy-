@@ -2,12 +2,7 @@
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from model.globalsvar import *
-import copy
 # }}}
-
-
-        
-
 
 class SheetGSpread(object):# {{{
 
@@ -69,7 +64,7 @@ class SheetGSpread(object):# {{{
         cell.sheet = self
         cell.name = cellname
         cell.col, cell.row = self.atoarrint(cellname)
-        print(cell.row, " , ", cell.col)
+#         print(cell.row, " , ", cell.col)
         cell.value = self.sheet[cell.row -1][cell.col -1]
         return cell 
 
@@ -81,10 +76,7 @@ class SheetGSpread(object):# {{{
         cell.value = self.sheet[cell.row -1][cell.col -1]
         return cell 
 
-    
 
-    
-    
     def range(self, rangestring):
         result =[]
         split = rangestring.split( ":")
@@ -94,9 +86,7 @@ class SheetGSpread(object):# {{{
             for row in range(*( begin[1], end[1] +1 ) if begin[1]<end[1] else (end[1], begin[1]+1 )):
                 result.append(self.cell(col, row))
         return result
-    
-    
-    
+     
     # }}}
     
 
@@ -111,19 +101,19 @@ class GSTodo(object):# {{{
         self.file = client.open(filename)
         self.sheet_main = SheetGSpread (self.file, TD_MAINSHEET)
         self.sheet_calc = SheetGSpread(self.file, TD_CALCSHEET)
-# }}}
+        # }}}
     
     def getTimeStump(self, address = TD_TIMESTUMP):# {{{
         return self.sheet_main.acell(address).value
-# }}}
+        # }}}
     
     def getProgressTo100Sum(self, address = TD_SUMPROGRESS100):# {{{
         return self.sheet_calc.acell(address).value
-# }}}
+        # }}}
     
     def getNameList(self):# {{{
         return self.sheet_main.range(TD_NAMERANGE) 
-# }}}
+        # }}}
     
     def getListOfProgressForCell(self, cell):# {{{
         result = []
@@ -134,7 +124,7 @@ class GSTodo(object):# {{{
         result.append(self.sheet_main.cell(cell.row, cell.col + 6).value)
         result.append(self.sheet_main.cell(cell.row, cell.col + 7).value)
         return result
-# }}}
+        # }}}
     
     def getPiListOfProgressBarForCell(self, cell_adress):# {{{
         cell = self.sheet_calc.acell(cell_adress) 
@@ -149,12 +139,18 @@ class GSTodo(object):# {{{
             value = value * 3
             result.append(value)
         return result
-# }}}
+        # }}}
     
     def getCellFromMain(self, name):# {{{
-        print(self.sheet_main.acell(name))
+#         print(self.sheet_main.acell(name))
         return self.sheet_main.acell(name)
-    # }}}
+        # }}}
+
+    
+    def sendNewLogLine(self, newLine):
+        print(newLine)
+    
+    
     # }}}
     
     

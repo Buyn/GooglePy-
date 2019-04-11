@@ -55,8 +55,14 @@ class mainwindow(object):
         self.todo = []
         for j in range(WI_TODOPROGRESBARLINE -1):
             tkg.row = j+1
-            self.todo.append( ToDolinebar(tkg, 'empty0' +str(j+1)))
+            self.todo.append( ToDolinebar(tkg, 'empty0' +str(j+1), validcommand = self.sendValue))
     
+
+    def sendValue(self, value):
+#         print("value is = ", value.get_value())
+        self.gsFile.sendNewLogLine(
+            [value.get_name(), value.get_value()])
+
     
     def loadTodoList(self):
         namelist = self.gsFile.getNameList()
@@ -73,6 +79,7 @@ class mainwindow(object):
 #         self.todo[0].setProgressLine(vaibls) 
 #         self.todo[0].setProgressLine(getListOfProgressForCell(self.gsFile.sheet_main.acell('J3'))) 
     
+
     def addPiFrame(self):
         self.mainwin.row = 6
         self.mainwin.sticky = S
