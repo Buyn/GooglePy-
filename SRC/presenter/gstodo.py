@@ -3,6 +3,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from model.globalsvar import *
 from model.typsconvert import *
+import time
 # }}}
 
 class SheetGSpread(object):# {{{
@@ -102,13 +103,16 @@ class GSTodo(object):# {{{
     
     def __init__(self, filename = GS_FILE, credfile = GS_CRED_FILE):# {{{
         # use creds to create begin client to interact with the Google Drive API
+        self.filename = filename
+        self.credfile = credfile
         scope = ['https://spreadsheets.google.com/feeds',
                  'https://www.googleapis.com/auth/drive']
         creds = ServiceAccountCredentials.from_json_keyfile_name(credfile, scope)
-        client = gspread.authorize(creds)
-        self.file = client.open(filename)
+        self.client = gspread.authorize(creds)
+        self.file = self.client.open(self.filename)
         self.sheet_main = SheetGSpread (self.file, TD_MAINSHEET)
         self.sheet_calc = SheetGSpread(self.file, TD_CALCSHEET)
+        self.credtimeuot = time.time() + GS_TIMEOUTLOGIN
         # }}}
     
     def getTimeStump(self, address = TD_TIMESTUMP):# {{{
@@ -155,7 +159,18 @@ class GSTodo(object):# {{{
         # }}}
 
     
+    def checkCred(self):
+        if time.time() < self.credtimeuot: return
+        scope = ['https://spreadsheets.google.com/feeds',
+                 'https://www.googleapis.com/auth/drive']
+        creds = ServiceAccountCredentials.from_json_keyfile_name(self.credfile, scope)
+        self.client = gspread.authorize(creds)
+        self.file = self.client.open(self.filename)
+        self.credtimeuot = time.time() + GS_TIMEOUTLOGIN
+    
+    
     def setBingo(self):
+        self.checkCred()
         self.sheet_main.update_acell('A1', 'Bingo!')    
     
 
@@ -169,6 +184,7 @@ class GSTodo(object):# {{{
     
     
     def reloadsheets(self):
+        self.checkCred()
         self.sheet_main.reload()
         self.sheet_calc.reload()
     

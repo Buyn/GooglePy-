@@ -3,10 +3,11 @@ APP_TITLE                    = "Dayli Todo Progres"
 
 
 # Datebase Setings
-GS_FILE                    = 'testToDoProgresDaylis'
-#GS_FILE                    = 'ToDoProgresDaylis'
+# GS_FILE                    = 'testToDoProgresDaylis'
+GS_FILE                    = 'ToDoProgresDaylis'
 #GS_CRED_FILE               = 'client_secret.json' 
 GS_CRED_FILE               = 'client_secret.json' 
+GS_TIMEOUTLOGIN            = 120 * 60
 #StracturF1
 WI_TODOPROGRESBARLINE      =   9
 WI_TODOPROGRESBAR          =   {
