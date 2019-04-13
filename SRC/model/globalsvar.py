@@ -7,9 +7,9 @@ APP_TITLE                    = "Dayli Todo Progres"
 GS_FILE                    = 'ToDoProgresDaylis'
 #GS_CRED_FILE               = 'client_secret.json' 
 GS_CRED_FILE               = 'client_secret.json' 
-GS_TIMEOUTLOGIN            = 120 * 60
+GS_TIMEOUTLOGIN            = 30 * 60
 #StracturF1
-WI_TODOPROGRESBARLINE      =   9
+WI_TODOPROGRESBARLINE      =   10
 WI_TODOPROGRESBAR          =   {
                                 "Tuday" :0,
                                 "24h"   :1,

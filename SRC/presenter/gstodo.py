@@ -158,55 +158,64 @@ class GSTodo(object):# {{{
         return self.sheet_main.acell(name)
         # }}}
 
-    
-    def checkCred(self):
-        if time.time() < self.credtimeuot: return
+    def checkCred(self):# {{{
+        if time.time() < self.credtimeuot: 
+#             self.credtimeuot = time.time() + GS_TIMEOUTLOGIN
+            return
+        self.client = None
+        self.file = None
+        print("Credet Timeout")
+        from oauth2client.service_account import ServiceAccountCredentials as tok
         scope = ['https://spreadsheets.google.com/feeds',
                  'https://www.googleapis.com/auth/drive']
-        creds = ServiceAccountCredentials.from_json_keyfile_name(self.credfile, scope)
+        creds = tok.from_json_keyfile_name(self.credfile, scope)
+        print("clent was = ", self.client)
         self.client = gspread.authorize(creds)
+        print("clent is = ", self.client)
+        print("file was = ", self.file)
         self.file = self.client.open(self.filename)
+        print("file is = ", self.file)
         self.credtimeuot = time.time() + GS_TIMEOUTLOGIN
+        # }}}
     
-    
-    def setBingo(self):
+    def setBingo(self):# {{{
         self.checkCred()
         self.sheet_main.update_acell('A1', 'Bingo!')    
-    
+        # }}}
 
-    def insertNewLogLine(self, newLine):
+    def insertNewLogLine(self, newLine):# {{{
         self.file.worksheet(
             TD_LOG).insert_row(
                 self.compileNewLogString(
                     name = newLine[0], time = newLine[1])
                 ,index = TD_NEWLOGLINEINDEX 
                 ,value_input_option= "USER_ENTERED")
+        # }}}
     
-    
-    def reloadsheets(self):
+    def reloadsheets(self):# {{{
         self.checkCred()
         self.sheet_main.reload()
         self.sheet_calc.reload()
+        # }}}
     
-    
-    def sendNewLogLine(self, newLine):
+    def sendNewLogLine(self, newLine):# {{{
         print(newLine)
         self.setBingo()
         self.reloadsheets()
         self.insertNewLogLine(newLine)
         self.reloadsheets()
-    
+        # }}}
 
-    def addEmptyString(self, result, counter):
+    def addEmptyString(self, result, counter):# {{{
         for i in range(counter):
             result.append("")
+    # }}}
     
-    
-    def getSumProgresto100(self, address = TD_SUMPROGRESS100 ):
+    def getSumProgresto100(self, address = TD_SUMPROGRESS100 ):# {{{
         return p2f(self.sheet_calc.acell(address).value)
+    # }}}
     
-    
-    def compileNewLogString(self, name, time):
+    def compileNewLogString(self, name, time):# {{{
         result = [self.getTimeStump()]
         self.addEmptyString(result, counter = 2)
         result.append(time)
@@ -218,7 +227,7 @@ class GSTodo(object):# {{{
         self.addEmptyString(result, counter = 2)
         result.append("=INT(A21)")
         return result
-    
+        # }}}
     # }}}
     
     
