@@ -18,7 +18,7 @@ class mainwindow(object):
 
 
     def reloadAll(self):
-        print("button:")
+        print("button: reload")
         self.gsFile.setBingo()
         self.gsFile.reloadsheets()
         self.loadPisData()
